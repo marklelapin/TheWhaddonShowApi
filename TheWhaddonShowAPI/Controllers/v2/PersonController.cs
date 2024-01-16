@@ -206,7 +206,9 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		///                                    
 		///             "IsTechnical":false,
 		///                                        
-		///             "Tags":["Male","Serious"]
+		///             "Tags":["Male","Serious"],
+		///             
+		///				"MSALLink": "sdfjkasdfsdsdf"
 		///       },
 		///       {   
 		///         
@@ -242,7 +244,9 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		///                                    
 		///             "IsTechnical":false,
 		///                                        
-		///             "Tags":["Female","Comedy"]
+		///             "Tags":["Female","Comedy"],
+		///             
+		///				"MSALLink": "sdfjkasdfsdsdf"
 		///       }
 		///             
 		/// ]
@@ -250,8 +254,8 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		///  
 		/// </remarks>
 		[HttpPost("updates/{copyId}")]
-		[Authorize]
-		[RequiredScope("show.write")]
+		//[Authorize]
+		//[RequiredScope("show.write")]
 		public async Task<IActionResult> Post([FromBody] List<PersonUpdate> updates, [FromRoute] Guid copyId)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PostUpdates(updates, copyId);
@@ -276,8 +280,8 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// 
 		/// </remarks>
 		[HttpPut("conflicts/clear")]
-		[Authorize]
-		[RequiredScope("show.write")]
+		//[Authorize]
+		//[RequiredScope("show.write")]
 		public async Task<IActionResult> PutConflicts([FromQuery] string ids)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PutClearConflicts(ids);

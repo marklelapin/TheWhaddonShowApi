@@ -233,8 +233,8 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		///  
 		/// </remarks>
 		[HttpPost("updates/{copyId}")]
-		[Authorize]
-		[RequiredScope("show.write")]
+		//[Authorize]
+		//[RequiredScope("show.write")]
 		public async Task<IActionResult> Post([FromBody] List<ScriptItemUpdate> updates, [FromRoute] Guid copyId)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PostUpdates(updates, copyId);
@@ -259,8 +259,8 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// 
 		/// </remarks>
 		[HttpPut("conflicts/clear")]
-		[Authorize]
-		[RequiredScope("show.write")]
+		//[Authorize]
+		//[RequiredScope("show.write")]
 		public async Task<IActionResult> PutConflicts([FromQuery] string ids)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PutClearConflicts(ids);
@@ -289,8 +289,8 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// 
 		/// </remarks>
 		[HttpPut("updates/postbackfromlocal/{copyId}")]
-		[Authorize]
-		[RequiredScope("show.write")]
+		//[Authorize]
+		//[RequiredScope("show.write")]
 		public async Task<IActionResult> PutPostBackFromLocal([FromRoute] Guid copyId, [FromBody] List<LocalToServerPostBack> postBacks)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PutPostBackToServer(postBacks, copyId);

@@ -25,14 +25,21 @@ builder.ConfigureWebAPIAuthentication_AzureAdB2C();
 
 builder.ByPassAuthenticationIfInDevelopment();
 
-
-
-
-
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("AllowAnyOrigin", builder =>
+	{
+		builder
+		.AllowAnyOrigin()
+		.AllowAnyMethod()
+		.AllowAnyHeader();
+	});
+});
+
 builder.Services.AddSwaggerGen(opts =>
 {
 	var title = "The Whaddon Show API";

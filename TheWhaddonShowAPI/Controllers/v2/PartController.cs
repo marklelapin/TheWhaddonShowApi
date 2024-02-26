@@ -23,11 +23,6 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		}
 
 
-
-
-
-
-
 		// GET: api/v2/Part/latest/?ids=68417C12-80C3-48BC-8EBE-3F3F2A91B8E5,17822466-DD66-4F2D-B4A9-F7EAAD6EB08B,F380FD46-6E6E-450D-AD3E-23EEC0B6A75E
 		/// <summary>
 		/// Gets the latest updates of the Part Id(s) passed in.
@@ -51,13 +46,8 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		public async Task<IActionResult> GetLatest([FromQuery] string ids)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.GetUpdates(ids, true);
-
 			return new ObjectResult(result) { StatusCode = (int)statusCode };
 		}
-
-
-
-
 
 		// GET: api/v2/Part/history/?ids=68417C12-80C3-48BC-8EBE-3F3F2A91B8E5,17822466-DD66-4F2D-B4A9-F7EAAD6EB08B,F380FD46-6E6E-450D-AD3E-23EEC0B6A75E
 		/// <summary>
@@ -83,14 +73,8 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		public async Task<IActionResult> GetHistory([FromQuery] string ids)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.GetUpdates(ids, false);
-
 			return new ObjectResult(result) { StatusCode = (int)statusCode };
 		}
-
-
-
-
-
 
 		// GET: api/v2/Part/conflicts/?ids=68417C12-80C3-48BC-8EBE-3F3F2A91B8E5,17822466-DD66-4F2D-B4A9-F7EAAD6EB08B,F380FD46-6E6E-450D-AD3E-23EEC0B6A75E
 		/// <summary>
@@ -115,7 +99,6 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		public async Task<IActionResult> GetConflicts([FromQuery] string? ids)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.GetConflictedUpdates(ids);
-
 			return new ObjectResult(result) { StatusCode = (int)statusCode };
 		}
 
@@ -138,7 +121,6 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		public async Task<IActionResult> GetUnsynced([FromRoute] Guid copyId)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.GetUnsyncedUpdates(copyId);
-
 			return new ObjectResult(result) { StatusCode = (int)statusCode };
 		}
 
@@ -213,7 +195,7 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		///  
 		/// </remarks>
 		[HttpPost("updates/{copyId}")]
-		//[Authorize]
+		[Authorize]
 		//[RequiredScope("show.write")]
 		public async Task<IActionResult> Post([FromBody] List<PartUpdate> updates, [FromRoute] Guid copyId)
 		{
@@ -239,8 +221,8 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// 
 		/// </remarks>
 		[HttpPut("conflicts/clear")]
-		//[Authorize]
-		//[RequiredScope("show.write")]
+		[Authorize]
+		[RequiredScope("show.write")]
 		public async Task<IActionResult> PutConflicts([FromQuery] string ids)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PutClearConflicts(ids);
@@ -278,8 +260,8 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// 
 		/// </remarks>
 		[HttpPut("updates/postbackfromlocal/{copyId}")]
-		//[Authorize]
-		//[RequiredScope("show.write")]
+		[Authorize]
+		[RequiredScope("show.write")]
 		public async Task<IActionResult> PutPostBackFromLocal([FromRoute] Guid copyId, [FromBody] List<LocalToServerPostBack> postBacks)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PutPostBackToServer(postBacks, copyId);

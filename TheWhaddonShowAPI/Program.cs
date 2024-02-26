@@ -12,15 +12,8 @@ using TheWhaddonShowTesting.Tests;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
-//TODO Tidy Up Program.cs and check Appsettings etc.
-//TODO Add PersonUpdate and SCriptItemUpdate Controllers.
-//TODO Add in HealthChecks and Logging
-//TODO Get Version 1 working
-//TODO Setup Postman Testing
-//TODO Setup testing of SqlDataAccess Layer utilising this API either using ROCP access or preferably Test Web Host for authentication to http clients
-//Create monitoring dashboard.
+//TODO Tidy Up Program.cs and check Appsettings etc
+//TODO Add in HealthChecks and Logging.
 
 builder.ConfigureWebAPIAuthentication_AzureAdB2C();
 
@@ -83,9 +76,7 @@ builder.Services.AddApiVersioning().AddApiExplorer(opts =>
 	opts.SubstituteApiVersionInUrl = true;
 });
 
-
 builder.Services.AddHealthChecks();
-
 
 builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddSingleton(typeof(IServerDataAccess<>), typeof(ServerSQLConnector<>));
@@ -93,8 +84,6 @@ builder.Services.AddSingleton(typeof(IServerAPIControllerService<>), typeof(Serv
 builder.Services.AddSingleton(typeof(ISampleDataProvider<>), typeof(SampleDataProvider<>));
 
 var app = builder.Build();
-
-
 
 var helper = new Helper(
 			app.Services.GetRequiredService<IServerDataAccess<PartUpdate>>(),

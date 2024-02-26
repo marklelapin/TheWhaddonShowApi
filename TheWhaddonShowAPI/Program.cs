@@ -1,4 +1,3 @@
-using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 using MyClassLibrary.DataAccessMethods;
 using MyClassLibrary.Extensions;
@@ -103,13 +102,12 @@ app.UseSwaggerUI(opts =>
 	opts.SwaggerEndpoint("/swagger/v2/swagger.json", "v2");
 	opts.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
 	opts.RoutePrefix = string.Empty;
-	opts.InjectStylesheet("/css/whaddon-show-theme.css");
 
 });
 //}
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

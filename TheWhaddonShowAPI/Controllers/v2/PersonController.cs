@@ -25,6 +25,11 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		}
 
 
+
+
+
+
+
 		// GET: api/v2/Person/latest/?ids=545A9495-DB58-44EC-BA47-FD0B7E478D4A,2B3FA075-D0B5-49AB-B897-DAB1428CA500
 		/// <summary>
 		/// Gets the latest updates of the Person Id(s) passed in.
@@ -48,8 +53,13 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		public async Task<IActionResult> GetLatest([FromQuery] string ids)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.GetUpdates(ids, true);
+
 			return new ObjectResult(result) { StatusCode = (int)statusCode };
 		}
+
+
+
+
 
 		// GET: api/v2/Person/history/?ids=545A9495-DB58-44EC-BA47-FD0B7E478D4A,2B3FA075-D0B5-49AB-B897-DAB1428CA500
 		/// <summary>
@@ -75,8 +85,13 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		public async Task<IActionResult> GetHistory([FromQuery] string ids)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.GetUpdates(ids, false);
+
 			return new ObjectResult(result) { StatusCode = (int)statusCode };
 		}
+
+
+
+
 
 
 		// GET: api/v2/Person/conflicts/?ids=545A9495-DB58-44EC-BA47-FD0B7E478D4A,2B3FA075-D0B5-49AB-B897-DAB1428CA500
@@ -102,8 +117,14 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		public async Task<IActionResult> GetConflicts([FromQuery] string? ids)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.GetConflictedUpdates(ids);
+
 			return new ObjectResult(result) { StatusCode = (int)statusCode };
 		}
+
+
+
+
+
 
 		// GET api/v2/Person/unsynced/27fc9657-3c92-6758-16a6-b9f82ca696b3
 		/// <summary>
@@ -124,8 +145,12 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		public async Task<IActionResult> GetUnsynced([FromRoute] Guid copyId)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.GetUnsyncedUpdates(copyId);
+
 			return new ObjectResult(result) { StatusCode = (int)statusCode };
 		}
+
+
+
 
 
 		// POST api/v2/Person/updates
@@ -229,12 +254,14 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		///  
 		/// </remarks>
 		[HttpPost("updates/{copyId}")]
-		[Authorize]
-		[RequiredScope("show.write")]
+		//[Authorize]
+		//[RequiredScope("show.write")]
 		public async Task<IActionResult> Post([FromBody] List<PersonUpdate> updates, [FromRoute] Guid copyId)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PostUpdates(updates, copyId);
+
 			return new ObjectResult(result) { StatusCode = (int)statusCode };
+
 		}
 
 		// PUT api/v2/Person/conflicts/clear
@@ -253,13 +280,18 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// 
 		/// </remarks>
 		[HttpPut("conflicts/clear")]
-		[Authorize]
-		[RequiredScope("show.write")]
+		//[Authorize]
+		//[RequiredScope("show.write")]
 		public async Task<IActionResult> PutConflicts([FromQuery] string ids)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PutClearConflicts(ids);
+
 			return new ObjectResult(result) { StatusCode = (int)statusCode };
 		}
+
+
+
+
 
 		// PUT api/v2/Person/updates/postbackfromlocal/27fc9657-3c92-6758-16a6-b9f82ca696b3
 		/// <summary>
@@ -278,15 +310,18 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// 
 		/// </remarks>
 		[HttpPut("updates/postbackfromlocal/{copyId}")]
-		[Authorize]
-		[RequiredScope("show.write")]
+		//[Authorize]
+		//[RequiredScope("show.write")]
 		public async Task<IActionResult> PutPostBackFromLocal([FromRoute] Guid copyId, [FromBody] List<LocalToServerPostBack> postBacks)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PutPostBackToServer(postBacks, copyId);
+
 			return new ObjectResult(result) { StatusCode = (int)statusCode };
 		}
 
 		//TODO - Add in LocalToServerPostBacks to comments above.
+
+
 
 		/// <summary>
 		/// Resets Sample Data for PersonUpdates. (Deleting all PartUpdate where IsSample = 1 and adding back in the default Sample Data)
@@ -299,8 +334,10 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		public async Task<IActionResult> ResetSampleData()
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.ResetSampleData();
+
 			return new ObjectResult(result) { StatusCode = (int)statusCode };
 		}
+
 
 		////// DELETE api/v2/Person/
 		////[HttpDelete("{updates}")]

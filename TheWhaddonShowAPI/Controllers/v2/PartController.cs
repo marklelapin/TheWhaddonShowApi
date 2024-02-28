@@ -7,6 +7,7 @@ using MyClassLibrary.LocalServerMethods.Models;
 using System.Net;
 using TheWhaddonShowClassLibrary.Models;
 
+
 namespace TheWhaddonShowAPI.Controllers.v2
 {
 	[Route("api/v{version:apiVersion}/[controller]")]
@@ -20,12 +21,8 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		public PartController(IServerAPIControllerService<PartUpdate> controllerService)
 		{
 			_controllerService = controllerService;
+			
 		}
-
-
-
-
-
 
 
 		// GET: api/v2/Part/latest/?ids=68417C12-80C3-48BC-8EBE-3F3F2A91B8E5,17822466-DD66-4F2D-B4A9-F7EAAD6EB08B,F380FD46-6E6E-450D-AD3E-23EEC0B6A75E
@@ -213,8 +210,7 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		///  
 		/// </remarks>
 		[HttpPost("updates/{copyId}")]
-		//[Authorize]
-		//[RequiredScope("show.write")]
+		//[Authorize (Roles = Roles.Write)]
 		public async Task<IActionResult> Post([FromBody] List<PartUpdate> updates, [FromRoute] Guid copyId)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PostUpdates(updates, copyId);
@@ -239,8 +235,7 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// 
 		/// </remarks>
 		[HttpPut("conflicts/clear")]
-		//[Authorize]
-		//[RequiredScope("show.write")]
+       // [Authorize(Roles = Roles.Write)]
 		public async Task<IActionResult> PutConflicts([FromQuery] string ids)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PutClearConflicts(ids);
@@ -278,8 +273,7 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// 
 		/// </remarks>
 		[HttpPut("updates/postbackfromlocal/{copyId}")]
-		//[Authorize]
-		//[RequiredScope("show.write")]
+//[Authorize(Roles = Roles.Write)]
 		public async Task<IActionResult> PutPostBackFromLocal([FromRoute] Guid copyId, [FromBody] List<LocalToServerPostBack> postBacks)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PutPostBackToServer(postBacks, copyId);
@@ -297,7 +291,6 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[HttpDelete("resetsampledata")]
 		[Authorize]
-		[RequiredScope("show.write")]
 		public async Task<IActionResult> ResetSampleData()
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.ResetSampleData();

@@ -13,7 +13,7 @@ namespace TheWhaddonShowAPI.Controllers.v2
 {
 	[Route("api/v{version:apiVersion}/[controller]")]
 	[ApiController]
-	[ApiVersion("2.0")]
+	//[ApiVersion("2.0")]
 	public class PersonController : ControllerBase
 	{
 
@@ -23,12 +23,6 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		{
 			_controllerService = controllerService;
 		}
-
-
-
-
-
-
 
 		// GET: api/v2/Person/latest/?ids=545A9495-DB58-44EC-BA47-FD0B7E478D4A,2B3FA075-D0B5-49AB-B897-DAB1428CA500
 		/// <summary>
@@ -254,9 +248,8 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		///  
 		/// </remarks>
 		[HttpPost("updates/{copyId}")]
-		//[Authorize]
-		//[RequiredScope("show.write")]
-		public async Task<IActionResult> Post([FromBody] List<PersonUpdate> updates, [FromRoute] Guid copyId)
+        //[Authorize(Roles = Roles.Write)]
+        public async Task<IActionResult> Post([FromBody] List<PersonUpdate> updates, [FromRoute] Guid copyId)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PostUpdates(updates, copyId);
 
@@ -280,9 +273,8 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// 
 		/// </remarks>
 		[HttpPut("conflicts/clear")]
-		//[Authorize]
-		//[RequiredScope("show.write")]
-		public async Task<IActionResult> PutConflicts([FromQuery] string ids)
+        //[Authorize(Roles = Roles.Write)]
+        public async Task<IActionResult> PutConflicts([FromQuery] string ids)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PutClearConflicts(ids);
 
@@ -310,9 +302,8 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// 
 		/// </remarks>
 		[HttpPut("updates/postbackfromlocal/{copyId}")]
-		//[Authorize]
-		//[RequiredScope("show.write")]
-		public async Task<IActionResult> PutPostBackFromLocal([FromRoute] Guid copyId, [FromBody] List<LocalToServerPostBack> postBacks)
+        //[Authorize(Roles = Roles.Write)]
+        public async Task<IActionResult> PutPostBackFromLocal([FromRoute] Guid copyId, [FromBody] List<LocalToServerPostBack> postBacks)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PutPostBackToServer(postBacks, copyId);
 
@@ -329,8 +320,7 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// <returns></returns>
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[HttpDelete("resetsampledata")]
-		[Authorize]
-		[RequiredScope("show.write")]
+        //[Authorize(Roles = Roles.Write)]
 		public async Task<IActionResult> ResetSampleData()
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.ResetSampleData();

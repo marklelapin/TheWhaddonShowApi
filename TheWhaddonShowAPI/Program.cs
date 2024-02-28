@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using MyClassLibrary.DataAccessMethods;
 using MyClassLibrary.Extensions;
@@ -11,17 +14,10 @@ using TheWhaddonShowTesting.Tests;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
-
-//TODO Tidy Up Program.cs and check Appsettings etc.
-//TODO Add PersonUpdate and SCriptItemUpdate Controllers.
-//TODO Add in HealthChecks and Logging
-//TODO Get Version 1 working
-//TODO Setup Postman Testing
-//TODO Setup testing of SqlDataAccess Layer utilising this API either using ROCP access or preferably Test Web Host for authentication to http clients
-//Create monitoring dashboard.
-
-builder.ConfigureWebAPIAuthentication_AzureAdB2C();
+//builder.ConfigureWebAPIAuthentication_AzureAdB2C();
 
 builder.ByPassAuthenticationIfInDevelopment();
 
@@ -128,3 +124,4 @@ app.MapHealthChecks("/health");
 
 
 app.Run();
+

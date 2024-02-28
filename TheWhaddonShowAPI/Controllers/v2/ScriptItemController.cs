@@ -26,10 +26,6 @@ namespace TheWhaddonShowAPI.Controllers.v2
 
 
 
-
-
-
-
 		// GET: api/v2/ScriptItem/latest/?ids=FC97305D-8A92-42D5-94DB-6FC9F5FF1432,744BD79A-1A2B-425F-874F-315A3B3BA9F2,79E604CF-7CC2-41F6-B37F-F30C76AB5F34
 		/// <summary>
 		/// Gets the latest updates of the ScriptItem Id(s) passed in.
@@ -233,9 +229,8 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		///  
 		/// </remarks>
 		[HttpPost("updates/{copyId}")]
-		//[Authorize]
-		//[RequiredScope("show.write")]
-		public async Task<IActionResult> Post([FromBody] List<ScriptItemUpdate> updates, [FromRoute] Guid copyId)
+        //[Authorize(Roles = Roles.Write)]
+        public async Task<IActionResult> Post([FromBody] List<ScriptItemUpdate> updates, [FromRoute] Guid copyId)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PostUpdates(updates, copyId);
 
@@ -259,9 +254,8 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// 
 		/// </remarks>
 		[HttpPut("conflicts/clear")]
-		//[Authorize]
-		//[RequiredScope("show.write")]
-		public async Task<IActionResult> PutConflicts([FromQuery] string ids)
+       // [Authorize(Roles = Roles.Write)]
+        public async Task<IActionResult> PutConflicts([FromQuery] string ids)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PutClearConflicts(ids);
 
@@ -289,9 +283,8 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// 
 		/// </remarks>
 		[HttpPut("updates/postbackfromlocal/{copyId}")]
-		//[Authorize]
-		//[RequiredScope("show.write")]
-		public async Task<IActionResult> PutPostBackFromLocal([FromRoute] Guid copyId, [FromBody] List<LocalToServerPostBack> postBacks)
+        //[Authorize(Roles = Roles.Write)]
+        public async Task<IActionResult> PutPostBackFromLocal([FromRoute] Guid copyId, [FromBody] List<LocalToServerPostBack> postBacks)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PutPostBackToServer(postBacks, copyId);
 
@@ -308,9 +301,8 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// <returns></returns>
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[HttpDelete("resetsampledata")]
-		[Authorize]
-		[RequiredScope("show.write")]
-		public async Task<IActionResult> ResetSampleData()
+       // [Authorize(Roles = Roles.Write)]
+        public async Task<IActionResult> ResetSampleData()
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.ResetSampleData();
 

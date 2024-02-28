@@ -248,7 +248,7 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		///  
 		/// </remarks>
 		[HttpPost("updates/{copyId}")]
-        //[Authorize(Roles = Roles.Write)]
+        [Authorize]
         public async Task<IActionResult> Post([FromBody] List<PersonUpdate> updates, [FromRoute] Guid copyId)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PostUpdates(updates, copyId);
@@ -273,7 +273,7 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// 
 		/// </remarks>
 		[HttpPut("conflicts/clear")]
-        //[Authorize(Roles = Roles.Write)]
+        [Authorize]
         public async Task<IActionResult> PutConflicts([FromQuery] string ids)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PutClearConflicts(ids);
@@ -302,7 +302,7 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// 
 		/// </remarks>
 		[HttpPut("updates/postbackfromlocal/{copyId}")]
-        //[Authorize(Roles = Roles.Write)]
+        [Authorize]
         public async Task<IActionResult> PutPostBackFromLocal([FromRoute] Guid copyId, [FromBody] List<LocalToServerPostBack> postBacks)
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.PutPostBackToServer(postBacks, copyId);
@@ -320,7 +320,7 @@ namespace TheWhaddonShowAPI.Controllers.v2
 		/// <returns></returns>
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[HttpDelete("resetsampledata")]
-        //[Authorize(Roles = Roles.Write)]
+        [Authorize]
 		public async Task<IActionResult> ResetSampleData()
 		{
 			(HttpStatusCode statusCode, string result) = await _controllerService.ResetSampleData();

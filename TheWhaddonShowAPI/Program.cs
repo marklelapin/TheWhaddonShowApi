@@ -1,4 +1,6 @@
-using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using MyClassLibrary.DataAccessMethods;
 using MyClassLibrary.Extensions;
@@ -12,10 +14,10 @@ using TheWhaddonShowTesting.Tests;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//TODO Tidy Up Program.cs and check Appsettings etc
-//TODO Add in HealthChecks and Logging.
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
-builder.ConfigureWebAPIAuthentication_AzureAdB2C();
+//builder.ConfigureWebAPIAuthentication_AzureAdB2C();
 
 builder.ByPassAuthenticationIfInDevelopment();
 
@@ -76,7 +78,9 @@ builder.Services.AddApiVersioning().AddApiExplorer(opts =>
 	opts.SubstituteApiVersionInUrl = true;
 });
 
+
 builder.Services.AddHealthChecks();
+
 
 builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddSingleton(typeof(IServerDataAccess<>), typeof(ServerSQLConnector<>));
@@ -84,6 +88,8 @@ builder.Services.AddSingleton(typeof(IServerAPIControllerService<>), typeof(Serv
 builder.Services.AddSingleton(typeof(ISampleDataProvider<>), typeof(SampleDataProvider<>));
 
 var app = builder.Build();
+
+
 
 var helper = new Helper(
 			app.Services.GetRequiredService<IServerDataAccess<PartUpdate>>(),
@@ -103,13 +109,12 @@ app.UseSwaggerUI(opts =>
 	opts.SwaggerEndpoint("/swagger/v2/swagger.json", "v2");
 	opts.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
 	opts.RoutePrefix = string.Empty;
-	opts.InjectStylesheet("/css/whaddon-show-theme.css");
 
 });
 //}
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -119,3 +124,4 @@ app.MapHealthChecks("/health");
 
 
 app.Run();
+

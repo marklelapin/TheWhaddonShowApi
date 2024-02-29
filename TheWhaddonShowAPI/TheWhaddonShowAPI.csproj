@@ -11,15 +11,13 @@
   <ItemGroup>
     <PackageReference Include="Asp.Versioning.Mvc" Version="6.4.0" />
     <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="6.4.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.16" />
-    <PackageReference Include="Microsoft.Identity.Web" Version="2.12.2" />
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.30.1" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="2.17.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.30.1" />
     <PackageReference Include="TheWhaddonShow.ClassLibrary" Version="1.0.6" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
     
